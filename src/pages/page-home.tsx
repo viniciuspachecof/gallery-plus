@@ -1,13 +1,23 @@
 import Container from '../components/container';
-import PhotoWidget from '../contexts/photos/components/photo-widget';
-import type { Photo } from '../contexts/photos/models/photo';
+import AlbumsFilter from '../contexts/albums/components/albums-filter';
+import PhotosList from '../contexts/photos/components/photos.list';
 
 export default function PageHome() {
   return (
     <Container>
-      <div className="grid grid-cols-4 gap-9">
-        <PhotoWidget
-          photo={{
+      <AlbumsFilter
+        albums={[
+          { id: '111', title: 'Album 1' },
+          { id: '222', title: 'Album 2' },
+          { id: '333', title: 'Album 3' },
+        ]}
+        loading
+        className="mb-9"
+      />
+
+      <PhotosList
+        photos={[
+          {
             id: '123',
             title: 'Olá mundo',
             imageId: 'portrait-tower.png',
@@ -16,11 +26,9 @@ export default function PageHome() {
               { id: '222', title: 'Album 2' },
               { id: '333', title: 'Album 3' },
             ],
-          }}
-        />
-
-        <PhotoWidget photo={{} as Photo} loading />
-      </div>
+          },
+        ]}
+      />
     </Container>
   );
 }
