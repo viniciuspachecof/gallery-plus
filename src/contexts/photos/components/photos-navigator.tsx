@@ -1,5 +1,6 @@
-import ButtonIcon from '../../../components/button-icon';
+import type React from 'react';
 import Skeleton from '../../../components/skeleton';
+import ButtonIcon from '../../../components/button-icon';
 import ArrowLeftIcon from '../../../assets/icons/chevron-left.svg?react';
 import ArrowRightIcon from '../../../assets/icons/chevron-right.svg?react';
 import Button from '../../../components/button';
@@ -47,7 +48,7 @@ export default function PhotosNavigator({
       ) : (
         <>
           <Skeleton className="w-10 h-10" />
-          <Skeleton className="w-10 h-10" />
+          <Skeleton className="w-20 h-10" />
         </>
       )}
     </div>

@@ -7,22 +7,17 @@ import ImagePreview from '../components/image-preview';
 import Button from '../components/button';
 import { AlbumsListSelectable } from '../contexts/albums/components/albums-list-selectable';
 import useAlbums from '../contexts/albums/hooks/use-albums';
+import { useParams } from 'react-router';
+import usePhoto from '../contexts/photos/hooks/use-photo';
 
 export default function PagePhotoDetails() {
+  const { id } = useParams();
+  const { photo, previousPhotoId, nextPhotoId, isLoadingPhoto } = usePhoto(id);
   const { albums, isLoadingAlbums } = useAlbums();
 
-  // Apenas para fazer o test do mock
-  const isLoadingPhoto = false;
-  const photo = {
-    id: '123',
-    title: 'Olá mundo',
-    imageId: 'portrait-tower.png',
-    albums: [
-      { id: '111', title: 'Album 1' },
-      { id: '222', title: 'Album 2' },
-      { id: '333', title: 'Album 3' },
-    ],
-  } as Photo;
+  if (!isLoadingPhoto && !photo) {
+    return <div>Foto não encontrada</div>;
+  }
 
   return (
     <Container>
@@ -35,13 +30,17 @@ export default function PagePhotoDetails() {
           <Skeleton className="w-48 h-8" />
         )}
 
-        <PhotosNavigator />
+        <PhotosNavigator loading={isLoadingPhoto} previousPhotoId={previousPhotoId} nextPhotoId={nextPhotoId} />
       </header>
 
       <div className="grid grid-cols-[21rem_1fr] gap-24">
         <div className="space-y-3">
           {!isLoadingPhoto ? (
-            <ImagePreview src={`/images/${photo?.imageId}`} title={photo?.title} imageClassName="h-[21rem]" />
+            <ImagePreview
+              src={`${import.meta.env.VITE_IMAGES_URL}/${photo?.imageId}`}
+              title={photo?.title}
+              imageClassName="h-[21rem]"
+            />
           ) : (
             <Skeleton className="h-[21rem]" />
           )}
@@ -54,7 +53,7 @@ export default function PagePhotoDetails() {
             Álbuns
           </Text>
 
-          <AlbumsListSelectable photo={photo} albums={albums} loading={isLoadingAlbums} />
+          <AlbumsListSelectable photo={photo as Photo} albums={albums} loading={isLoadingAlbums} />
         </div>
       </div>
     </Container>
