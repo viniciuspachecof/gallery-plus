@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { supabase, toPhoto } from '../../_lib/supabase'
+import { supabase, toPhoto } from '../../_lib/supabase.js'
 import busboy from 'busboy'
 import { randomUUID } from 'crypto'
 import path from 'path'
